@@ -1,6 +1,7 @@
 const canvas = document.getElementById("jsCanvas"); //canvas는 html 기능 pixel을 다루는..
-const ctx = canvas.getContext("2d"); // 2d로 작업한다잉~
+const ctx = canvas.getContext("2d"); // 2d로 작업
 const colors = document.getElementsByClassName("jsColor");
+const range = document.getElementById("jsRange");
 
 canvas.width = 600; //html canvas에 사이즈를 알려줌
 canvas.height = 600;
@@ -35,6 +36,12 @@ function handleColorClick(event) {
   ctx.strokeStyle = color;
 }
 
+function handleRangeChange(event) {
+  //console.log(event.target.value);      //console.log로 event 찍어서 그 안에 있는 객체를 확인한다! > 'value'라는 component를 가져와야 하는구나를 알기 위해
+  const size = event.target.value;
+  ctx.lineWidth = size;
+}
+
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("mousedown", startPainting);
@@ -45,3 +52,8 @@ if (canvas) {
 Array.from(colors).forEach(
   color => color.addEventListener("click", handleColorClick) //각각의 colors 배열 안에 있는 요소에 적용한다.
 );
+
+if (range) {
+  //물론 여기서 range는 늘 true지만, safe/check를 위해서 if로 한 번 감싸주기 (element가 없을 경우의 전체 에러 방지)
+  range.addEventListener("input", handleRangeChange); //html의 input 요소 (bar)
+}
